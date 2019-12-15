@@ -35,8 +35,8 @@ PUT http://localhost:8080/user/5df5ff17c08c1b5d3b5fe15f
 content-type:application/json
 
 {
-    "name":"webflux-2",
-    "age" :27
+    "name":"webflux-8",
+    "age" :19
 }
 
 ###

@@ -113,4 +113,51 @@ public class UserController {
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * 根据年龄查找用户
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    @GetMapping("/age/{start}/{end}")
+    public Flux<User> findByAge(@PathVariable("start") int start, @PathVariable("end") int end) {
+        return this.userRepository.ageBetween(start, end);
+
+    }
+
+    /**
+     * 根据年龄查找用户,返回流
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    @GetMapping(value = "/stream/age/{start}/{end}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<User> findByAgeStream(@PathVariable("start") int start, @PathVariable("end") int end) {
+        return this.userRepository.ageBetween(start, end);
+
+    }
+
+    /**
+     * 根据年龄查找用户
+     *
+     * @return
+     */
+    @GetMapping("/old")
+    public Flux<User> findOld() {
+        return this.userRepository.findOld();
+    }
+
+    /**
+     * 根据年龄查找用户
+     *
+     * @return
+     */
+    @GetMapping(value = "/stream/old", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<User> findOldStream() {
+        return this.userRepository.findOld();
+    }
+
+
 }
