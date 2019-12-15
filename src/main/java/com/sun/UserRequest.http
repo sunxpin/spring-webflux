@@ -1,0 +1,46 @@
+GET http://localhost:8080/1
+
+###
+GET http://localhost:8080/2
+
+###
+GET http://localhost:8080/3
+
+###
+#查询所有用户
+GET http://localhost:8080/user/all
+
+###
+#查询所有用户，服务器以流的方式向浏览器返回数据
+GET http://localhost:8080/user/stream/all
+
+###
+#新增用户
+POST http://localhost:8080/user/
+content-type: application/json
+
+## {"id":"5df5f93aedaa2d62a8ddb795","name":"web-flux1","age":12}
+{
+    "name":"web-flux1",
+    "age":12
+}
+
+###
+#根据id删除用户
+DELETE http://localhost:8080/user/5df5fbaf85f1a974062d60cc
+
+###
+# 根据id更新用户数据
+PUT http://localhost:8080/user/5df5ff17c08c1b5d3b5fe15f
+content-type:application/json
+
+{
+    "name":"webflux-2",
+    "age" :27
+}
+
+###
+# 根据id查找用户
+GET http://localhost:8080/user/5df5ff17c08c1b5d3b5fe15f
+
+###
