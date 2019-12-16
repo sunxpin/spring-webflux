@@ -10,7 +10,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @RestController
 @Slf4j
@@ -52,7 +51,7 @@ public class IndexController {
      * <p>
      * SSE 是单向通道，只能服务器向客户端发送消息，如果客户端需要向服务器发送消息，则需要一个新的 HTTP 请求
      * <p>
-     *     ruhe
+     * 如何保证数据完整性？
      * 客户端在每次接收到消息时，会把消息的 id 字段作为内部属性 Last-Event-ID 储存起来。
      * SSE 默认支持断线重连机制，在连接断开时会 触发 EventSource 的 error 事件，同时自动重连。
      * 再次连接成功时 EventSource 会把 Last-Event-ID 属性作为请求头发送给服务器，

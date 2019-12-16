@@ -62,4 +62,28 @@ Accept: application/json
 ###查询指定年龄段20-30的用户 ，流的方式返回
 GET http://localhost:8080/user/stream/old
 Accept:text/event-stream
+
+
+
+
+
+###routerFunction方式配置路由
+###新增用户
+POST http://localhost:8080/router/
+content-type: application/json
+
+## {"id":"5df5f93aedaa2d62a8ddb795","name":"web-flux1","age":12}
+{
+  "name":"webflux10",
+  "age":20
+}
+
+
+###查询所有用户
+GET http://localhost:8080/router
+
+
+###根据id删除用户
+DELETE http://localhost:8080/router/5df6dc257c95b26a00910866
+
 ###

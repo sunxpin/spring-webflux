@@ -5,7 +5,7 @@ import com.sun.exception.CheckException;
 import java.util.Arrays;
 
 /**
- * @description: TODO
+ * @description: 校验工具类
  * @author: 星际一哥
  * @create: 2019-12-16 19:00
  */
