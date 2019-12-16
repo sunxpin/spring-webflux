@@ -2,6 +2,7 @@ package com.sun.web;
 
 import com.sun.entity.User;
 import com.sun.repository.UserRepository;
+import com.sun.utils.CheckUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +58,7 @@ public class UserController {
     public Mono<User> addUser(@Valid @RequestBody User user) {
         // spring data jpa 里面，新增和修改都是save，有id是修改，id为空是新增
         user.setId(null);
+        CheckUtil.checkUser(user.getName());
         return this.userRepository.save(user);
     }
 
@@ -90,6 +92,7 @@ public class UserController {
     @PutMapping("/{id}")
     public Mono<ResponseEntity<User>> updateUser(@PathVariable("id") String id,
                                                  @Valid @RequestBody User user) {
+        CheckUtil.checkUser(user.getName());
         return this.userRepository.findById(id)
                 // flatMap 操作数据
                 .flatMap(u -> {

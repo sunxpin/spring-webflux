@@ -1,5 +1,6 @@
 package com.sun.advice;
 
+import com.sun.exception.CheckException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,6 +18,15 @@ public class CheckAdvice {
     @ExceptionHandler(WebExchangeBindException.class)
     public ResponseEntity<String> handlerBindException(WebExchangeBindException ex) {
         return new ResponseEntity<>(toStr(ex), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CheckException.class)
+    public ResponseEntity<String> handlerCheckException(CheckException ex) {
+        return new ResponseEntity<>(toStr(ex), HttpStatus.BAD_REQUEST);
+    }
+
+    private String toStr(CheckException ex) {
+        return ex.getFieldName() + "：错误的值" + ex.getFieldValue();
     }
 
     /**

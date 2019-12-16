@@ -22,8 +22,8 @@ content-type: application/json
 
 ## {"id":"5df5f93aedaa2d62a8ddb795","name":"web-flux1","age":12}
 {
-    "name":"web-flux8",
-    "age":45
+    "name":"admin",
+    "age":20
 }
 
 
@@ -36,8 +36,8 @@ PUT http://localhost:8080/user/5df6dc257c95b26a00910866
 content-type:application/json
 
 {
-    "name":"webflux-7",
-    "age" :1
+    "name":"admin",
+    "age" :10
 }
 
 ###根据id查找用户
