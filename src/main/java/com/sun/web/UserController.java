@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+
 /**
  * @Description 用户CRUD
  * @Author 星际一哥
@@ -52,7 +54,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/")
-    public Mono<User> addUser(@RequestBody User user) {
+    public Mono<User> addUser(@Valid @RequestBody User user) {
         // spring data jpa 里面，新增和修改都是save，有id是修改，id为空是新增
         user.setId(null);
         return this.userRepository.save(user);
@@ -87,7 +89,7 @@ public class UserController {
      */
     @PutMapping("/{id}")
     public Mono<ResponseEntity<User>> updateUser(@PathVariable("id") String id,
-                                                 @RequestBody User user) {
+                                                 @Valid @RequestBody User user) {
         return this.userRepository.findById(id)
                 // flatMap 操作数据
                 .flatMap(u -> {

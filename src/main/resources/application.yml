@@ -1,4 +1,5 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://192.168.133.128:27017/webflux
+#      uri: mongodb://192.168.133.128:27017/webflux
+      uri: mongodb://192.168.240.128:27017/webflux
