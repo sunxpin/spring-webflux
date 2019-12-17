@@ -74,7 +74,7 @@ content-type: application/json
 
 ## {"id":"5df5f93aedaa2d62a8ddb795","name":"web-flux1","age":12}
 {
-  "name":"webflux10",
+  "name":"admin",
   "age":20
 }
 

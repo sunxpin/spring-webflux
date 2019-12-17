@@ -2,6 +2,7 @@ package com.sun.handler;
 
 import com.sun.entity.User;
 import com.sun.repository.UserRepository;
+import com.sun.utils.CheckUtil;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -41,9 +42,13 @@ class UserHandler {
      * @return
      */
     public Mono<ServerResponse> createUser(ServerRequest serverRequest) {
-        // 获取id
+        // 获取用户提交数据
         Mono<User> userMono = serverRequest.bodyToMono(User.class);
-        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(this.userRepository.saveAll(userMono), User.class);
+        return userMono.flatMap(user -> {
+            // 校验用户名字合法性
+            CheckUtil.checkUser(user.getName());
+            return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(this.userRepository.save(user), User.class);
+        });
 
     }
 
