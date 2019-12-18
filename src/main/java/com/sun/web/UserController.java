@@ -1,6 +1,6 @@
 package com.sun.web;
 
-import com.sun.entity.User;
+import com.sun.beans.User;
 import com.sun.repository.UserRepository;
 import com.sun.utils.CheckUtil;
 import org.springframework.http.HttpStatus;

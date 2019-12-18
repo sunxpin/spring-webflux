@@ -1,6 +1,6 @@
 package com.sun.repository;
 
-import com.sun.entity.User;
+import com.sun.beans.User;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;

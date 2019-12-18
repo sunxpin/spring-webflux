@@ -1,4 +1,4 @@
-package com.sun.entity;
+package com.sun.beans;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
