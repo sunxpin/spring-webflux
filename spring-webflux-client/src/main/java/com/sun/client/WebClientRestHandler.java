@@ -44,13 +44,19 @@ public class WebClientRestHandler implements RestHandler {
         WebClient.ResponseSpec retrieve =
                 // 接收json
                 method.accept(MediaType.APPLICATION_JSON)
-
                         // 发出请求
                         .retrieve();
-        // 处理返回body ,如果是Flux 则转换为Flux ，否则转换为Mono
-        return methodInfo.isReturnFlux() ?
-                retrieve.bodyToFlux(methodInfo.getReturnElementType()) : retrieve.bodyToMono(methodInfo.getReturnElementType());
 
+        // 异常处理
+//        retrieve.onStatus()
+//                .onStatus(HttpStatus::is4xxClientError, response -> Mono.error(WebClientResponseException.create(response.rawStatusCode(), "找不到服务", null, null, null)))
+//                .onStatus(HttpStatus::is5xxServerError, response -> Mono.error(WebClientResponseException.create(response.rawStatusCode(), "内部错误", null, null, null))).toBodilessEntity();
+
+
+        // 处理返回body ,如果是Flux 则转换为Flux ，否则转换为Mono
+        return methodInfo.isReturnFlux() ? retrieve.bodyToFlux(methodInfo.getReturnElementType()) : retrieve.bodyToMono(methodInfo.getReturnElementType()).doOnError(w -> {
+            System.out.println("这是我啊");
+        });
 
     }
 }
