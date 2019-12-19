@@ -1,7 +1,7 @@
 package com.sun.proxy;
 
 /**
- * 创建代理类
+ * 代理类接口
  */
 
 public interface ProxyCreator {

@@ -3,6 +3,7 @@ package com.sun.web;
 import com.sun.beans.User;
 import com.sun.repository.UserRepository;
 import com.sun.utils.CheckUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("user")
+@Slf4j
 public class UserController {
 
     private final UserRepository userRepository;
@@ -33,7 +35,7 @@ public class UserController {
      *
      * @return
      */
-    @GetMapping("/all")
+    @GetMapping("/")
     public Flux<User> getAll() {
         return this.userRepository.findAll();
     }

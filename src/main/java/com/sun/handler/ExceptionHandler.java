@@ -34,7 +34,7 @@ public class ExceptionHandler implements WebExceptionHandler {
         //已知异常
         if (ex instanceof CheckException) {
             CheckException checkException = (CheckException) ex;
-            return checkException.getFieldName() + ": Invalidate " + checkException.getFieldValue();
+            return checkException.getFieldName() + ": Invalided " + checkException.getFieldValue();
         }
         //未知异常
         else {

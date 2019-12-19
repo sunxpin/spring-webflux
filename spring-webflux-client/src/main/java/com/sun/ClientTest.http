@@ -7,21 +7,29 @@
 
 
 
-###
+### 测试信息提取
+GET http://localhost:8352/user/test
+Accept: application/json
+
+### 查询所有
 GET http://localhost:8352/user/
 Accept: application/json
 
-###
-DELETE http://localhost:8352/user/1231
+### 根据id查询
+GET http://localhost:8352/user/5df6dc127c95b26a00910864
 Accept: application/json
 
-###
+### 根据id删除
+DELETE http://localhost:8352/user/5dfa32574a2003408ff3033b
+
+
+### 新增用户
 POST http://localhost:8352/user/
 Content-Type: application/json
 
 {
-  "name": "webflux-1",
-  "age": 20
+  "name": "webflux-8",
+  "age": 18
 }
 
 ###

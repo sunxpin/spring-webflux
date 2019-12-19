@@ -1,6 +1,6 @@
 package com.sun.web;
 
-import com.sun.beans.User;
+import com.sun.entity.User;
 import com.sun.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +19,23 @@ public class UserController {
     @Autowired
     IUserService userService;
 
+    /**
+     * 测试信息提取 ，不订阅就不会实际发出请求，但是会进入我们的代理类
+     */
+    @GetMapping("/test")
+    public void test() {
+        userService.findAll();
+        userService.findById("222222222");
+        userService.deleteUser("21");
+        userService.createUser(Mono.just(User.builder().name("foo").age(22).build()));
+    }
+
     @GetMapping("/")
     public Flux<User> findAll() {
         return userService.findAll();
     }
 
+    @GetMapping("/{id}")
     public Mono<User> findById(@PathVariable("id") String id) {
         return userService.findById(id);
     }

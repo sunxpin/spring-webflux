@@ -8,19 +8,17 @@ import com.sun.client.WebClientRestHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.Proxy;
+import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @description: jdk动态代理类
+ * @description: jdk动态代理类对象
  * @author: 星际一哥
  * @create: 2019-12-17 19:43
  */
@@ -31,6 +29,8 @@ public class JdkDynamicAopProxy implements ProxyCreator {
 
     @Override
     public Object createProxy(Class<?> type) {
+
+        // 抽取服务器信息
         ServerInfo serverInfo = extractServerInfo(type);
         log.info("serverInfo :{}", serverInfo);
 
@@ -59,7 +59,38 @@ public class JdkDynamicAopProxy implements ProxyCreator {
                 // 封装请求参数和body
                 extractRequestParamsAndBody(method, args, methodInfo);
 
+                // 封装返回信息
+                extractReturnInfo(method, methodInfo);
+
                 return methodInfo;
+            }
+
+            /**
+             * 抽取返回的是Mono还是Flux和返回对象的类型
+             * @param method
+             * @param methodInfo
+             */
+            private void extractReturnInfo(Method method, MethodInfo methodInfo) {
+
+                // 返回Mono还是Flux
+                // isAssignableFrom() 判断类型是否是某个类的子类  vs instanceof  判断实例是否是某个的子类
+                boolean isFlux = method.getReturnType().isAssignableFrom(Flux.class);
+                methodInfo.setReturnFlux(isFlux);
+
+                // 得到返回对象的实际类型
+                Class<?> elementType = extractElementType(method.getGenericReturnType());
+                methodInfo.setReturnElementType(elementType);
+
+            }
+
+            /**
+             *得到泛型的实际类型
+             * @param genericReturnType
+             * @return
+             */
+            private Class<?> extractElementType(Type genericReturnType) {
+                Type[] actualTypeArguments = ((ParameterizedType) genericReturnType).getActualTypeArguments();
+                return (Class<?>) actualTypeArguments[0];
             }
 
             /**
@@ -72,15 +103,18 @@ public class JdkDynamicAopProxy implements ProxyCreator {
                 Map<String, Object> params = new LinkedHashMap<>();
                 Parameter[] parameters = method.getParameters();
                 for (int i = 0; i < parameters.length; i++) {
+                    // 参数信息
                     PathVariable annotation = parameters[i].getAnnotation(PathVariable.class);
                     if (annotation != null) {
                         params.put(annotation.value(), args[i]);
                         methodInfo.setParams(params);
                     }
 
+                    // 请求body和body类型
                     RequestBody requestBody = parameters[i].getAnnotation(RequestBody.class);
                     if (requestBody != null) {
                         methodInfo.setBody((Mono<?>) args[i]);
+                        methodInfo.setBodyElementType(extractElementType(parameters[i].getParameterizedType()));
                     }
                 }
             }

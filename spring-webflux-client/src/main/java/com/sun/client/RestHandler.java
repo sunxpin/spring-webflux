@@ -18,6 +18,12 @@ public interface RestHandler {
     void init(ServerInfo serverInfo);
 
 
+    /**
+     * rest客户端远程调用接口
+     *
+     * @param methodInfo
+     * @return
+     */
     Object invokeRest(MethodInfo methodInfo);
 }
 

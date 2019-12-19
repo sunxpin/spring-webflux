@@ -1,7 +1,7 @@
 package com.sun.service;
 
 import com.sun.annotation.APIServer;
-import com.sun.beans.User;
+import com.sun.entity.User;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
